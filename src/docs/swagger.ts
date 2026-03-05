@@ -12,6 +12,9 @@ const options: swaggerJsDoc.Options = {
       {
         url: 'http://localhost:8080/api',
       },
+      {
+        url: 'https://acarain-backend.vercel.app/api',
+      },
     ],
   },
   apis: ['./src/routes/*.ts', './src/controllers/*.ts', './src/docs/*.ts'],
