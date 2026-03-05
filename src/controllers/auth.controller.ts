@@ -1,3 +1,4 @@
+import { IReqUser } from '../middlewares/authenticate.middleware';
 import UserModel from '../models/user.model';
 import { UserRole } from '../types/auth';
 import { AppError } from '../utils/app-error';
@@ -72,6 +73,17 @@ export default class AuthController {
     res.status(200).json({
       message: 'Login success',
       data: token,
+    });
+  });
+
+  public static me = asyncHandler(async (req: IReqUser, res, _next) => {
+    const user = req.user;
+
+    const result = await UserModel.findById(user?.id);
+
+    res.status(200).json({
+      message: 'Success get user profile',
+      data: result,
     });
   });
 }
