@@ -1,7 +1,9 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import swaggerUi from 'swagger-ui-express';
 
+import { swaggerSpec } from './docs/swagger';
 import errorMiddleware from './middlewares/error-.middleware';
 import notFoundMiddleware from './middlewares/not-found.middleware';
 import apiRoutes from './routes/api';
@@ -21,6 +23,8 @@ const init = async () => {
     app.use(cors());
 
     app.use(express.json());
+
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     app.use('/api', apiRoutes);
 
