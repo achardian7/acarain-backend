@@ -10,7 +10,11 @@ import apiRoutes from './routes/api';
 
 const app = express();
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(cors());
 
 app.use(express.json());
@@ -20,7 +24,10 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerSpec, {
     customCssUrl: 'https://unpkg.com/swagger-ui-dist/swagger-ui.css',
-    customJs: 'https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js',
+    customJs: [
+      'https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js',
+      'https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js',
+    ],
   })
 );
 
