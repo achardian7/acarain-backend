@@ -5,3 +5,10 @@ export type TRegister = {
   password: string;
   confirmPassword: string;
 };
+
+export type TLogin = {
+  identifier: string;
+  password: string;
+};
+
+export type UserRole = 'admin' | 'user';

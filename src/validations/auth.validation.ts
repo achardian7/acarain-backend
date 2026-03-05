@@ -12,3 +12,8 @@ export const registerValidateSchema = z
     error: "Password doesn't match",
     path: ['confirmPassword'],
   });
+
+export const loginValidateSchema = z.object({
+  identifier: z.string(),
+  password: z.string(),
+});
