@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import authRoutes from './auth.routes';
+
 const apiRoutes = Router();
 
 apiRoutes.get('/live', (_req, res) => {
@@ -8,5 +10,7 @@ apiRoutes.get('/live', (_req, res) => {
     data: null,
   });
 });
+
+apiRoutes.use('/auth', authRoutes);
 
 export default apiRoutes;
