@@ -6,6 +6,7 @@ import { asyncHandler } from '../utils/async-handler';
 import { encrypt } from '../utils/encrypt';
 import { generateToken } from '../utils/jwt';
 import {
+  activationValidateSchema,
   loginValidateSchema,
   registerValidateSchema,
 } from '../validations/auth.validation';
@@ -57,6 +58,7 @@ export default class AuthController {
           username: identifier,
         },
       ],
+      isActive: true,
     });
 
     if (!userByIdentifier) throw new AppError('Invalid credentials', 403);
@@ -84,6 +86,33 @@ export default class AuthController {
     res.status(200).json({
       message: 'Success get user profile',
       data: result,
+    });
+  });
+
+  public static activation = asyncHandler(async (req, res, next) => {
+    const body = activationValidateSchema.parse(req.body);
+
+    const { code } = body;
+
+    const user = await UserModel.findOneAndUpdate(
+      {
+        activationCode: code,
+      },
+      {
+        isActive: true,
+      },
+      {
+        new: true,
+      }
+    );
+
+    if (!user) {
+      throw new AppError('Invalid activation code', 400);
+    }
+
+    res.status(200).json({
+      message: 'User successfully activated',
+      data: user,
     });
   });
 }

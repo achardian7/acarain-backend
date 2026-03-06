@@ -122,4 +122,68 @@ authRoutes.post('/login', AuthController.login);
  */
 authRoutes.get('/me', authenticate, AuthController.me);
 
+/**
+ * @swagger
+ * /auth/activation:
+ *   post:
+ *     summary: Activate user account
+ *     description: Activate a user account using the activation code sent to the user's email.
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - code
+ *             properties:
+ *               code:
+ *                 type: string
+ *                 example: 8f4c2a7e9d1b3c5f
+ *     responses:
+ *       200:
+ *         description: User successfully activated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User successfully activated
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: 665fa1b4c1a9e0f9c5e8f123
+ *                     fullName:
+ *                       type: string
+ *                       example: John Doe
+ *                     username:
+ *                       type: string
+ *                       example: johndoe
+ *                     email:
+ *                       type: string
+ *                       example: johndoe@email.com
+ *                     isActive:
+ *                       type: boolean
+ *                       example: true
+ *       400:
+ *         description: Invalid activation code
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Invalid activation code
+ *                 data:
+ *                   nullable: true
+ *                   example: null
+ */
+authRoutes.post('/activation', AuthController.activation);
+
 export default authRoutes;
