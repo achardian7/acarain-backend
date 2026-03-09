@@ -13,6 +13,9 @@ const env = cleanEnv(process.env, {
   EMAIL_SMTP_HOST: str(),
   EMAIL_SMTP_SERVICE_NAME: str(),
   CLIENT_HOST: url({ default: 'http://localhost:3000' }),
+  CLOUDINARY_CLOUD_NAME: str(),
+  CLOUDINARY_API_KEY: str(),
+  CLOUDINARY_API_SECRET: str(),
 });
 
 export default env;

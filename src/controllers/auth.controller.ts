@@ -1,9 +1,9 @@
-import { IReqUser } from '../middlewares/authenticate.middleware';
 import UserModel from '../models/user.model';
 import { UserRole } from '../types/auth';
 import { AppError } from '../utils/app-error';
 import { asyncHandler } from '../utils/async-handler';
 import { encrypt } from '../utils/encrypt';
+import { IReqUser } from '../utils/interfaces';
 import { generateToken } from '../utils/jwt';
 import {
   activationValidateSchema,

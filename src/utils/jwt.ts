@@ -1,13 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { Types } from 'mongoose';
 
-import { UserRole } from '../types/auth';
 import env from './env';
-
-export interface IUserToken {
-  id: Types.ObjectId;
-  role: UserRole;
-}
+import { IUserToken } from './interfaces';
 
 export const generateToken = (user: IUserToken): string => {
   const token = jwt.sign(user, env.SECRET, {

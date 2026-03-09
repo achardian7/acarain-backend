@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
+import { ROLES } from '../utils/constant';
 import { encrypt } from '../utils/encrypt';
 import env from '../utils/env';
 import { renderMailHtml, sendMail } from '../utils/mail/mail';
@@ -40,8 +41,8 @@ const UserSchema = new Schema<User>(
     },
     role: {
       type: Schema.Types.String,
-      enum: ['admin', 'user'],
-      default: 'user',
+      enum: [ROLES.ADMIN, ROLES.MEMBER],
+      default: ROLES.MEMBER,
     },
     profilePicture: {
       type: Schema.Types.String,
