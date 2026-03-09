@@ -23,18 +23,12 @@ const authRoutes = Router();
  *         content:
  *           application/json:
  *             schema:
- *               allOf:
- *                 - $ref: '#/components/schemas/SuccessResponse'
- *                 - type: object
- *                   properties:
- *                     data:
- *                       $ref: '#/components/schemas/User'
- *       409:
- *         description: Email or username already used
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               type: object
+ *               properties:
+ *                 meta:
+ *                   $ref: '#/components/schemas/Meta'
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
  */
 authRoutes.post('/register', AuthController.register);
 
@@ -43,13 +37,26 @@ authRoutes.post('/register', AuthController.register);
  * /auth/login:
  *   post:
  *     summary: Login user
+ *     description: Authenticate user using email or username and password
  *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/LoginRequest'
+ *             type: object
+ *             required:
+ *               - identifier
+ *               - password
+ *             properties:
+ *               identifier:
+ *                 type: string
+ *                 description: Username or email
+ *                 example: johndoe
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: secret123
  *     responses:
  *       200:
  *         description: Login success
@@ -58,15 +65,15 @@ authRoutes.post('/register', AuthController.register);
  *             schema:
  *               type: object
  *               properties:
- *                 message:
- *                   type: string
- *                   example: Login success
+ *                 meta:
+ *                   $ref: '#/components/schemas/Meta'
  *                 data:
  *                   type: object
  *                   properties:
  *                     accessToken:
  *                       type: string
- *       403:
+ *                       example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *       401:
  *         description: Invalid credentials
  */
 authRoutes.post('/login', AuthController.login);
@@ -76,7 +83,6 @@ authRoutes.post('/login', AuthController.login);
  * /auth/me:
  *   get:
  *     summary: Get current user profile
- *     description: Retrieve the currently authenticated user's profile
  *     tags: [Auth]
  *     security:
  *       - bearerAuth: []
@@ -88,37 +94,10 @@ authRoutes.post('/login', AuthController.login);
  *             schema:
  *               type: object
  *               properties:
- *                 message:
- *                   type: string
- *                   example: Success get user profile
+ *                 meta:
+ *                   $ref: '#/components/schemas/Meta'
  *                 data:
- *                   type: object
- *                   properties:
- *                     _id:
- *                       type: string
- *                       example: 665fa1b4c1a9e0f9c5e8f123
- *                     fullName:
- *                       type: string
- *                       example: John Doe
- *                     username:
- *                       type: string
- *                       example: johndoe
- *                     email:
- *                       type: string
- *                       example: johndoe@email.com
- *       401:
- *         description: Unauthorized
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Unauthorized
- *                 data:
- *                   nullable: true
- *                   example: null
+ *                   $ref: '#/components/schemas/User'
  */
 authRoutes.get('/me', authenticate, AuthController.me);
 
@@ -127,7 +106,7 @@ authRoutes.get('/me', authenticate, AuthController.me);
  * /auth/activation:
  *   post:
  *     summary: Activate user account
- *     description: Activate a user account using the activation code sent to the user's email.
+ *     description: Activate a user account using the activation code
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -140,7 +119,7 @@ authRoutes.get('/me', authenticate, AuthController.me);
  *             properties:
  *               code:
  *                 type: string
- *                 example: 8f4c2a7e9d1b3c5f
+ *                 example: 123456
  *     responses:
  *       200:
  *         description: User successfully activated
@@ -149,40 +128,12 @@ authRoutes.get('/me', authenticate, AuthController.me);
  *             schema:
  *               type: object
  *               properties:
- *                 message:
- *                   type: string
- *                   example: User successfully activated
+ *                 meta:
+ *                   $ref: '#/components/schemas/Meta'
  *                 data:
- *                   type: object
- *                   properties:
- *                     _id:
- *                       type: string
- *                       example: 665fa1b4c1a9e0f9c5e8f123
- *                     fullName:
- *                       type: string
- *                       example: John Doe
- *                     username:
- *                       type: string
- *                       example: johndoe
- *                     email:
- *                       type: string
- *                       example: johndoe@email.com
- *                     isActive:
- *                       type: boolean
- *                       example: true
+ *                   $ref: '#/components/schemas/User'
  *       400:
  *         description: Invalid activation code
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Invalid activation code
- *                 data:
- *                   nullable: true
- *                   example: null
  */
 authRoutes.post('/activation', AuthController.activation);
 

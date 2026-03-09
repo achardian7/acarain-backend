@@ -5,6 +5,7 @@ import { asyncHandler } from '../utils/async-handler';
 import { encrypt } from '../utils/encrypt';
 import { IReqUser } from '../utils/interfaces';
 import { generateToken } from '../utils/jwt';
+import response from '../utils/response';
 import {
   activationValidateSchema,
   loginValidateSchema,
@@ -38,10 +39,7 @@ export default class AuthController {
       password,
     });
 
-    res.status(201).json({
-      message: 'Success registration',
-      data: result,
-    });
+    response.success(res, result, 'Success registration', 201);
   });
 
   public static login = asyncHandler(async (req, res, _next) => {
@@ -72,10 +70,7 @@ export default class AuthController {
       role: userByIdentifier.role as UserRole,
     });
 
-    res.status(200).json({
-      message: 'Login success',
-      data: token,
-    });
+    response.success(res, token, 'Login success', 201);
   });
 
   public static me = asyncHandler(async (req: IReqUser, res, _next) => {
@@ -83,10 +78,7 @@ export default class AuthController {
 
     const result = await UserModel.findById(user?.id);
 
-    res.status(200).json({
-      message: 'Success get user profile',
-      data: result,
-    });
+    response.success(res, result, 'Success get user profile');
   });
 
   public static activation = asyncHandler(async (req, res, next) => {
@@ -110,9 +102,6 @@ export default class AuthController {
       throw new AppError('Invalid activation code', 400);
     }
 
-    res.status(200).json({
-      message: 'User successfully activated',
-      data: user,
-    });
+    response.success(res, user, 'User successfully activated');
   });
 }

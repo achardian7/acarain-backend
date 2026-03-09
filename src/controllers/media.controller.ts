@@ -1,6 +1,7 @@
 import { AppError } from '../utils/app-error';
 import { asyncHandler } from '../utils/async-handler';
 import { IReqUser } from '../utils/interfaces';
+import response from '../utils/response';
 import uploader from '../utils/uploader';
 
 export default class MediaController {
@@ -9,10 +10,7 @@ export default class MediaController {
 
     const result = await uploader.uploadSingle(req.file as Express.Multer.File);
 
-    res.status(200).json({
-      message: 'Success upload file',
-      data: result,
-    });
+    response.success(res, result, 'Success upload file', 201);
   });
 
   public static multiple = asyncHandler(async (req: IReqUser, res, _next) => {
@@ -23,10 +21,7 @@ export default class MediaController {
       req.files as Express.Multer.File[]
     );
 
-    res.status(200).json({
-      message: 'Success upload files',
-      data: result,
-    });
+    response.success(res, result, 'Success upload files', 201);
   });
 
   public static remove = asyncHandler(async (req: IReqUser, res, next) => {
@@ -36,9 +31,6 @@ export default class MediaController {
 
     const result = await uploader.remove(fileUrl);
 
-    res.status(200).json({
-      message: 'Success remove file',
-      data: result,
-    });
+    response.success(res, result, 'Success remove file', 201);
   });
 }
