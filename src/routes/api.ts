@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import authRoutes from './auth.routes';
 import categoryRoutes from './category.routes';
+import eventRoutes from './event.routes';
 import mediaRoutes from './media.routes';
 import regionRoutes from './region.routes';
 
@@ -18,5 +19,6 @@ apiRoutes.use('/auth', authRoutes);
 apiRoutes.use('/media', mediaRoutes);
 apiRoutes.use('/categories', categoryRoutes);
 apiRoutes.use('/regions', regionRoutes);
+apiRoutes.use('/events', eventRoutes);
 
 export default apiRoutes;
