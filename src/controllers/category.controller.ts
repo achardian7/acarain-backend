@@ -16,7 +16,7 @@ export default class CategoryCotroller {
 
     const result = await CategoryModel.create(body);
 
-    response.success(res, result, 'Success create new category');
+    response.success(res, result, 'Success create new category', 201);
   });
 
   public static findOne = asyncHandler(async (req, res, _next) => {

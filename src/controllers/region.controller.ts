@@ -4,7 +4,7 @@ import response from '../utils/response';
 
 export default class RegionController {
   public static findByCity = asyncHandler(async (req, res, _next) => {
-    const { name } = req.query;
+    const { name } = req.params;
     const result = await RegionModel.findByCity(`${name}`);
     response.success(res, result, 'success get region by city name');
   });
