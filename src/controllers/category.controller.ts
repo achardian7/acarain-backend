@@ -68,7 +68,7 @@ export default class CategoryCotroller {
       res,
       result,
       {
-        current: page,
+        current: Number(page),
         total: count,
         totalPages: Math.ceil(count / limit),
       },

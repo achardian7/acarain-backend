@@ -70,7 +70,7 @@ export default class AuthController {
       role: userByIdentifier.role as UserRole,
     });
 
-    response.success(res, token, 'Login success', 201);
+    response.success(res, token, 'Login success');
   });
 
   public static me = asyncHandler(async (req: IReqUser, res, _next) => {

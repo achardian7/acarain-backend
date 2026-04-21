@@ -5,7 +5,7 @@ import { IUserToken } from './interfaces';
 
 export const generateToken = (user: IUserToken): string => {
   const token = jwt.sign(user, env.SECRET, {
-    expiresIn: '1h',
+    expiresIn: '7d',
   });
 
   return token;
