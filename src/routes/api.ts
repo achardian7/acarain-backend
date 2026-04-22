@@ -5,6 +5,7 @@ import categoryRoutes from './category.routes';
 import eventRoutes from './event.routes';
 import mediaRoutes from './media.routes';
 import regionRoutes from './region.routes';
+import ticketRoutes from './ticket.routes';
 
 const apiRoutes = Router();
 
@@ -20,5 +21,6 @@ apiRoutes.use('/media', mediaRoutes);
 apiRoutes.use('/categories', categoryRoutes);
 apiRoutes.use('/regions', regionRoutes);
 apiRoutes.use('/events', eventRoutes);
+apiRoutes.use('/tickets', ticketRoutes);
 
 export default apiRoutes;
